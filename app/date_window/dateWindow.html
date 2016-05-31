@@ -1,0 +1,101 @@
+<style xmlns="http://www.w3.org/1999/html">
+    #div-center {
+        text-align: center;
+    }
+
+    #dateTime {
+        width: 175px;
+        margin-top: 15px;
+        height: 25px;
+    }
+
+    #skipDaily{
+        margin-left: 48px;
+    }
+
+#div2-left{
+    float: left;
+    margin-left: 240px;
+}
+</style>
+
+<div ng-controller="dateWindowCtrl" id="div-center" class="page-header text-info">
+    <form class="form-horizontal" name="myForm">
+        <div class="row">
+            <div class="col-md-11 col-md-offset-1">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <lable for="startTime" class="col-md-2 form-label">开始时间:</lable>
+                            <div class="col-md-8">
+                                <input type="text" id="startTime" class="form-control" ng-model="fromDate" data-max-date="{{untilDate}}" placeholder="Start" bs-datepicker>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <lable for="endTime" class="col-md-2 form-label">结束时间:</lable>
+                            <div class="col-md-8">
+                                <input type="text" id="endTime" class="form-control" ng-model="untilDate" data-min-date="{{fromDate}}" placeholder="End" bs-datepicker>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <div class="row">
+            <div class="col-md-11 col-md-offset-1">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <lable for="startTime" class="col-md-2 form-label">执行方式:</lable>
+                            <div class="col-md-8">
+                                <select name="dateTime" class="form-control" ng-change="getDateTime()" ng-model="dateTime">
+                                    <option value="1">立即执行</option>
+                                    <option value="2">指定日期</option>
+                                    <option value="3">按天执行</option>
+                                    <option value="4">按周执行</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <lable ng-show="menuState.state1"  style="float: left; margin-left: 240px;">
+                当前时间:{{dt1 | date:'yyyy-MM-dd HH:mm:ss'}}
+
+            </lable>
+            <div ng-show="menuState.state2" id="div2-left">
+            <label ></label>
+                指定时间:
+                <!--<input type="text" data-ng-model="data.date">-->
+                <!--<datetimepicker data-ng-model="data.date"></datetimepicker>-->
+                <!--</input>-->
+                <!--<datetimepicker data-ng-model="data.date"></datetimepicker>-->
+                <!--<datetimepicker data-ng-model="data.date" data-before-render="beforeRender($view, $dates, $leftDate, $upDate, $rightDate)"></datetimepicker>-->
+                <input type="text" ng-model="start_date" date-format disabled="disabled">
+            </div>
+        </div>
+
+        <label ng-show="menuState.state3" class="form-label">按天执行</label>
+        <div>
+        <span id="pressDay" style="letter-spacing: 10px;">每隔<input type="number" id="iptDay">天：</span>
+        </div>
+        <!--<div id="pressWeekTiem"><label ng-show="menuState.state4">按周执行</label>-->
+            <!--<div>-->
+                <!--<lable for="skipDaily">每隔 <input type="number" id="skipDaily">天：</lable>-->
+            <!--</div>-->
+            <!--<div>-->
+                <!--<lable>时间点：</lable>-->
+            <!--</div>-->
+        <!--</div>-->
+    </form>
+</div>

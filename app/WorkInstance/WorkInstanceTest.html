@@ -1,0 +1,44 @@
+<style>
+
+</style>
+<div ng-controller="WorkExampleCtrl">
+<div class="container-fluid page-header text-info">
+    <form class="form-horizontal">
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <div class="form-group">
+                    <lable class="col-md-1" for="exampleInputWork">作业</lable>
+                        <div class="col-md-10">
+                    <select id="exampleInputWork" class="form-control">
+                        <option value="">1</option>
+                    </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-5 col-md-offset-2 radio">
+                    <lable class="col-md-3">是否异步</lable>
+
+                    <label class="col-md-2">
+                        <input type="radio" name="optionsRadios" id="optionsRadios1" value="0" ng-model="Radio.currRadio" ng-change="selectRadio()" checked="checked">
+                        是
+                    </label>
+                    <label class="col-md-2" >
+                        <input type="radio" name="optionsRadios" id="optionsRadios2" value="1" ng-model="Radio.currRadio" ng-change="selectRadio()">
+                        否
+                    </label>
+                </div>
+                <div class="col-md-4" ng-hide="showRadio">
+                    <lable class="col-md-3">异步数量</lable>
+                    <div class="col-md-6">
+                    <input type="number" class="form-control">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+</div>

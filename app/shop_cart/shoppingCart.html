@@ -1,0 +1,123 @@
+<!--<div ng-controller="CartController">-->
+<!--<h1>购物车实例</h1>-->
+
+<!--&lt;!&ndash;ng-repeat会把div中的dom结构复制一份&ndash;&gt;-->
+<!--<div ng-repeat='item in items'>-->
+
+<!--<span>{{item.title}}</span>-->
+
+<!--&lt;!&ndash;ng-model创建数据绑定关系&ndash;&gt;-->
+<!--<input ng-model='item.quantity'>-->
+
+<!--&lt;!&ndash;|是管道符,currency实现美元格式化&ndash;&gt;-->
+<!--<span>{{item.price | currency}}</span>-->
+
+<!--<span>{{item.price * item.quantity | currency}}</span>-->
+
+<!--&lt;!&ndash;ng-click点击按钮,$index包含了ng-repeat过程中的循环计数&ndash;&gt;-->
+<!--<button ng-click="remove ($index)">Delete</button>-->
+<!---->
+<!--</div>-->
+<!--</div>-->
+
+<!--显示和隐藏的功能实例-->
+<!--<div ng-controller="CartController">-->
+<!--<button ng-click="toggleMenu()">Toggle Menu</button>-->
+<!--<ul ng-show="menuState.show">-->
+<!--<li ng-click="stun()">Stun</li>-->
+<!--<li ng-click="disintegrate()">Disintegrate</li>-->
+<!--<li ng-click="erase()">Erase</li>-->
+<!--</ul>-->
+<!--</div>-->
+
+<!--<div ng-controllter="CartController">-->
+<!--<div ng-repeat="item in items">-->
+<!--<span>{{item.title}}</span>-->
+<!--<input ng-model="item.quantity">-->
+<!--<span>{{item.price | currency}}</span>-->
+<!--<span>{{item.price * item.quantity | currency}}</span>-->
+<!--</div>-->
+<!--<div>总价:{{totalCarts() | currency}}</div>-->
+<!--<div>折扣:{{bill.discount | currency}}</div>-->
+<!--<div>折扣后:{{subtotal() | currency}}</div>-->
+<!--</div>-->
+<!--<div ng-init="thing={name:'Word'}">-->
+<!--<h1>Hello,{{thing.name}}</h1>-->
+<!--<div ng-controller="helloCtrl">-->
+<!--say: <input type="text" ng-model="thing.name">-->
+<!--<h1>Hello,{{thing.name}}</h1>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="container" ng-controller="TextAreaCtrl">-->
+<!--<div>-->
+<!--<span ng-class="{'text-warning':shouldWarn()}">剩余字数:{{remaining()}}</span>-->
+<!--</div>-->
+<!--<div>-->
+<!--<textarea ng-model="message">-->
+<!--{{message}}-->
+<!--</textarea>-->
+<!--</div>-->
+<!--<div class="row">-->
+<!--<button ng-disabled="!hasValidLength()" ng-click="send()">发送</button>-->
+<!--<button ng-click="clear()">清楚</button>-->
+<!--</div>-->
+<!--</div>-->
+<style>
+    #ul-li {
+        width: 340px;
+    }
+
+    ul li {
+        float: left;
+        width: 80px;
+    }
+
+    ol li {
+        float: left;
+
+    }
+
+    ul {
+        list-style-type: none;
+    }
+</style>
+<div class="boughtlist border" ng-controller="CartController">
+    <h4>商品列表</h4>
+    <div class="col-md-5 col-md-offset-1" id="ul-li">
+        <ul>
+            <li ng-repeat="value in items" class="left" item-id="{{value.id}}">
+                <p>{{value.name}}</p>
+                <p>{{value.price}}</p>
+                <p><input type="button" class="btn btn-success btn-xs" ng-click="buyAction($event)" name={{value.name}}
+                          price={{value.price}}
+                          item-id="{{value.id}}" value="购买"></p>
+            </li>
+        </ul>
+    </div>
+
+
+    <h4>购物车列表</h4>
+    <div class="boughtlist border">
+        <ol>
+            <li ng-repeat="value in boughtList" item-id="{{value.id}}">
+                <span>{{value.name}}</span>
+                <span>{{value.price}}</span>
+                <span>
+
+                    <input type="number" min="0" ng-model="value.num" ng-init="value.num=1"
+                           ng-change="changeNum(value.id,value.num);" class="form-control"
+                    >
+ <button ng-click="value.num=value.num+1;changeNum($even,value.num);" class="btn btn-success btn-xs">+</button>
+                    <button ng-click="value.num=value.num-1;changeNum($even,value.num);" class="btn btn-success btn-xs">-</button>
+                </span>
+                <span><button ng-click="delect($even)" itemm-id="{{value.id}}">删除</button></span>
+            </li>
+        </ol>
+        <div>
+            <!--number：1也就是number数据，小数点后一位-->
+            <p ng-init="0" style="position:absolute;">总价格:{{total|number:2}}</p>
+        </div>
+
+
+
+

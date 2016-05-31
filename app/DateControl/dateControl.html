@@ -1,0 +1,207 @@
+<style>
+    label {
+        font-weight: 500;
+    }
+
+    #nextDiv {
+        font-family: '微软雅黑';
+        letter-spacing: 2px;
+        border: 1px solid gray;
+        width: 100%;
+        margin: auto;
+        position: absolute;
+        left: 2px;
+        top: 220px;
+    }
+
+    #all {
+        font-family: '微软雅黑';
+        letter-spacing: 2px;
+        border: 1px solid gray;
+        border-top-left-radius: 25px;
+        width: 80%;
+        margin-top: 10px;
+        font-size: large;
+    }
+
+    #center {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        margin-left: 50px;
+    }
+
+    .input-bottom-10px {
+        margin-bottom: 10px;
+    }
+
+    input[type="number"] {
+        width: 93px;
+    }
+
+    select {
+        width: 93px;
+    }
+
+    .margin-top-10px {
+        margin-top: 15px;
+    }
+
+    .italic {
+        cursor: pointer;
+    }
+
+
+</style>
+<div ng-controller="myDateCtrl">
+    <div class="col-md-11 col-md-offset-1" id="all">
+
+        <div bs-active-pane="tabs.activeTab" bs-tabs id="center" class="italic"
+             ng-mouseenter="hover = true"
+             ng-mouseleave="hover = false">
+
+            <div ng-repeat="tab in tabs" data-title="{{ tab.title }}" bs-pane class="italic">
+                <form class="form-inline" name="timepickerForm">
+                    <div ng-if="tab.id==1" style="margin-left: 20px;" class="margin-top-10px form-group">
+                        <label>每</label>
+                        <input type="number" min="1" max="60" ng-init="cronObj.mintues=1" ng-model="cronObj.mintues">
+                        <label>分钟</label>
+                        <!--ng-hide,为false显示元素,为true时隐藏元素-->
+                        <span style="color: red; font-size: small;" ng-hide="cronObj.mintues>=0">请输入正确的值</span>
+                    </div>
+
+                    <!-- 每时 -->
+                    <div ng-if="tab.id==2" class="margin-top-10px form-group"
+                         ng-class="{'has-error': datepickerForm.date.$invalid}">
+                        <label><input type="radio" checked="checked" name="hourly" value="0"
+                                      ng-model="RadioTab.currentRadio" ng-change="selectDailyRadio()">
+                            每</label>
+                        <input type="number" min="1" max="24" ng-model="cronObj.hourly.hour">
+                        <label>小时</label>
+                        <span style="color: red; font-size: small;" ng-hide="cronObj.hourly.hour>=0">请输入正确的值</span>
+                        <div>
+                        <label style="margin-left: 27px; margin-top: 10px;">
+                            <input type="radio" checked="checked" name="hourly" value="1"
+                                   ng-model="RadioTab.currentRadio" ng-change="selectDailyRadio()">
+                            <input bs-timepicker type="datetime"
+                                   name="time"
+                                   ng-model="cronObj.hourly.mintues" size="8"
+                                   data-time-format="HH:mm" data-length="1" data-minute-step="1"
+                                   data-arrow-behavior="picker">
+                            <span class="glyphicon glyphicon-time" aria-hidden="true"></span>开始
+                        </label>
+                        </div>
+                    </div>
+                    <!--每天-->
+                    <div ng-if="tab.id==3" class="margin-top-10px form-group">
+                        <label><input type="radio" checked="checked" name="daily" value="0"
+                                      ng-model="RadioTab.currentRadio" ng-change="selectDailyRadio()">
+                            每</label>
+                        <input type="number" min="1" max="31" ng-model="cronObj.daily"
+                               class="input-bottom-10px">
+                        <label>天</label>
+                        <span style="color: red; font-size: small;" ng-hide="cronObj.daily>=0">请输入正确的值</span>
+                       <div>
+                        <label>
+                            <input type="radio" name="daily" value="1"
+                                   ng-change="selectDailyRadio()"
+                                   ng-model="RadioTab.currentRadio"
+                                   style="margin-bottom: 10px;">
+                            每个工作日</label>
+
+
+                        <input type="text" size="8" ng-model="cronObj.daily_startTime" name="time" bs-timepicker
+                               data-time-format="HH:mm" data-length="1" data-minute-step="1"
+                               data-arrow-behavior="picker">
+                        <span class="glyphicon glyphicon-time" aria-hidden="true"></span>开始
+                    </div>
+                    </div>
+                    <!--每周-->
+                    <div ng-if="tab.id==4" class="margin-top-10px form-group">
+                        <div>
+                            <label ng-repeat="(key, text) in weeks">
+                                <input type="checkbox" checklist-model="wee.weeks" checklist-value="key">{{text}}
+
+                            </label>
+                        </div>
+                        <input type="text" size="8" ng-model="cronObj.weekly.startTime" name="time" bs-timepicker style="margin-top: 10px;"
+                               data-time-format="HH:mm" data-length="1" data-minute-step="1"
+                               data-arrow-behavior="picker">
+                        <span class="glyphicon glyphicon-time" aria-hidden="true"></span>开始
+                    </div>
+
+                    <!--每月-->
+                    <div ng-if="tab.id==5" class="margin-top-10px form-group">
+                        <label>
+                            <input type="radio" name="monthly2" checked="checked" value="0"
+                                   ng-model="RadioTab.currentRadio" ng-change="selectDailyRadio()">
+                            每</label>
+                        <input type="number" min="1"
+                               ng-model="cronObj.monthly_month1">
+                        <label>月的第</label>
+                        <input type="number" class="input-bottom-10px" min="1" ng-model="cronObj.monthly_day">
+                        <label>天</label>
+                        <span style="color: red; font-size: small;" ng-hide="cronObj.monthly_day>=0">请输入正确的值</span>
+                        <div>
+
+                        <label>
+                            <input type="radio" name="monthly2" value="1" ng-model="RadioTab.currentRadio"
+                                   ng-change="selectDailyRadio()">
+                            每</label>
+                        <input type="number" min="1" ng-model="cronObj.monthly_month2">
+                        <label>月的第</label>
+                        <select ng-model="cronObj.monthly_number" ng-options="x for x in Number">
+                        </select>
+                        <label>个</label>
+                        <select ng-model="cronObj.monthly_week" ng-options="x for (x,y) in Week"></select>
+                        <span style="color: red; font-size: small;" ng-hide="cronObj.monthly_month2>=0">请输入正确的值</span>
+                        </div>
+                        <div>
+               <span style="margin-left: 47px;"><input type="text" style="margin-top: 10px;" size="8" ng-model="cronObj.monthly_startTime"
+                                                       name="cronObj.monthly_startTime" bs-timepicker
+                                                       data-time-format="HH:mm" data-length="1" data-minute-step="1"
+                                                       data-arrow-behavior="picker" >
+                <span class="glyphicon glyphicon-time" aria-hidden="true"></span>开始
+                </span>
+                        </div>
+                    </div>
+
+
+                    <!--每年-->
+                    <div ng-if="tab.id==6" class="margin-top-10px form-group">
+                        <label>
+                            <input type="radio" value="0" ng-model="RadioTab.currentRadio"
+                                   ng-change="selectDailyRadio()" name="monthly" checked="checked">
+                            每年</label>
+                        <select ng-model="cronObj.yearly_month1" ng-options="x for (x, y) in Month"></select>
+                        <input type="number" class="input-bottom-10px" min="1" max="31"
+                               ng-init="Yearly_day.yea_dayObj=1" ng-model="cronObj.yearly_day">
+                        <label>日</label>
+                        <span style="color: red; font-size: small;" ng-hide="cronObj.yearly_day>=0">请输入正确的值</span>
+                        <br>
+                        <label>
+                            <input type="radio" name="monthly" value="1" ng-model="RadioTab.currentRadio"
+                                   ng-change="selectDailyRadio()">
+                            每年</label>
+                        <select ng-model="cronObj.yearly_month2" ng-options="x for (x, y) in Month"></select>
+                        <label>的第</label>
+                        <select ng-model="cronObj.yearly_number" ng-options="x for x in Number">
+                        </select>
+                        个  <select ng-model=" cronObj.yearly_week" ng-options="x for (x,y) in Week"></select>
+                    </select>
+                        <br>
+                <span style="margin-left: 67px;">
+                    <input type="text" size="8" style="margin-top: 10px;" ng-model="cronObj.yearly_startTime" name="time" bs-timepicker
+                           data-time-format="HH:mm" data-length="1" data-minute-step="1" data-arrow-behavior="picker">
+                   <span class="glyphicon glyphicon-time" aria-hidden="true"></span>开始
+                </span>
+                    </div>
+
+                </form>
+            </div>
+            <input type="button" class="btn btn-danger btn-s" value="执行" ng-click="minutesClick()"
+                   style="margin-left: 0px;margin-top: 20px;">
+        </div>
+
+
+
+

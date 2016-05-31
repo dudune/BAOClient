@@ -1,0 +1,39 @@
+<!--<style>-->
+<!--.css-form input.ng-invalid.ng-dirty{-->
+    <!--background-color: red;-->
+<!--}-->
+<!--</style>-->
+<!--<div ng-controller="myTestContrl">-->
+    <!--<form novalidate class="simple-form">-->
+        <!--<table>-->
+            <!--<tr><th>Name:</th><th><input type="text" ng-model="user.name" required></th></tr>-->
+            <!--<tr><th>E-mail:</th><th><input type="text" ng-model="user.email" required></th></tr>-->
+            <!--<tr><th>Gender:</th><th><input type="radio" ng-model="user.gender" name="gender" value="男">男-->
+                <!--<input type="radio" ng-model="user.gender" name="gender" value="女">女</th>-->
+            <!--<tr><th><button ng-click="reset()">Reset</button></th>-->
+            <!--<th><button ng-click="update(user)">Save</button></th>-->
+        <!--</table>-->
+    <!--</form>-->
+    <!--<pre> form={{user | json}}</pre>-->
+    <!--<pre> master={{master | json}}</pre>-->
+<!--</div>-->
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span2">
+            <!--Sidebar content-->
+
+            Search: <input ng-model="query">
+
+        </div>
+        <div class="span10">
+
+            <ul class="phones">
+                <li ng-repeat="phone in phones | filter:query">
+                    {{phone.name}}
+                    <p>{{phone.snippet}}</p>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+</div>

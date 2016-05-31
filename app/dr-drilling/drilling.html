@@ -1,0 +1,176 @@
+<style>
+    .my-drop-zone {
+        border: dotted 3px lightgray;
+        min-height: 10rem;
+        line-height: 5.5rem;
+        text-align: center;
+        font-size: 2rem;
+    }
+
+    .nv-file-over {
+        border: dotted 3px red;
+    }
+
+    /* Default class applied to drop zones on over */
+    .another-file-over-class {
+        border: dotted 3px green;
+    }
+
+    .switch {
+        width: 6em;
+    }
+
+    .switch.checked small {
+        left: 4.6em;
+    }
+</style>
+<div class="container">
+    <div class="row">
+        <div class="page-header text-info">
+            <h2>BAO灾备演练
+                <small>BAO灾备演练系统</small>
+                <!--<button type="button" class="btn btn-warning btn-xs" ng-click="item.cancel()">-->
+                    <!--<span class="glyphicon glyphicon-ban-circle"></span> 执行接口测试-->
+                <!--</button>-->
+                <!--http://localhost:8080/bao/execute?gridName=?&processName=?&sycn=?&sycnNum=?-->
+                <!--<a href="#/date_window">date window</a>-->
+                <!--<a href="#/shoppingCart">购物车实例</a>-->
+                <!--<a href="#/workInstance">作业实例</a>-->
+                <!--<a href="#/myTest">测试实例</a>-->
+                <!--<a href="#/myDate">时间控件</a>-->
+            </h2>
+        </div>
+
+        <div class="col-md-10 col-md-offset-1">
+            <form name="managerFor " class="form-horizontal">
+                <div ng-controller="BaoCtrl" nv-file-drop="" uploader="uploader" filters="customFilter">
+                    <div class="form-group">
+                        <label for="drillJob" class="col-md-2">选择作业</label>
+                        <div class="col-md-10">
+                            <select id="drillJob" ng-model="selectedJobIndex" ng-change="selectJobFn()" class="form-control">
+                                <option ng-repeat="jobObj in Drill.jobList" name={{jobObj.gridName}}
+                                        value="{{$index}}">{{jobObj.processName}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-2">
+                            <switch id="enabled" name="enabled" ng-model="Drill.enabled" ng-change="changeSynFn()" on="并发执行" off="顺序执行"
+                                    class="green"></switch>
+                        </div>
+                        {{enabled}}
+                        <div class="col-md-3">
+                            <input type="number" ng-model="Drill.concurrentNumber" class="form-control"
+                                   ng-show="Drill.enabled" required="不能为空"
+                                   ng-change="changeSynNumberFn()"
+                                   min="1" max="100"
+                                   placeholder="请输入并发数 ...">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div nv-file-drop="" uploader="uploader">
+                                <div nv-file-over="" uploader="uploader" over-class="another-file-over-class"
+                                     class="well my-drop-zone">
+                                    要上传的文件拖放到这里 ...
+                                </div>
+                            </div>
+
+                            <!-- Example: nv-file-select="" uploader="{Object}" options="{Object}" filters="{String}" -->
+                            <!--多文件上传-->
+                            <!--<input type="file" nv-file-select="" uploader="uploader" multiple/><br/>-->
+
+                            <!--单文件上传-->
+                            <!--<input type="file" nv-file-select="" uploader="uploader" />-->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+
+                            <h3>上传文件列表</h3>
+                            <p>文件个数: {{ uploader.queue.length }}</p>
+
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th width="50%">文件名</th>
+                                    <th ng-show="uploader.isHTML5">文件大小</th>
+                                    <th ng-show="uploader.isHTML5">上传进度</th>
+                                    <th>状态</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="item in uploader.queue">
+                                    <td><strong>{{ item.file.name }}</strong></td>
+                                    <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB
+                                    </td>
+                                    <td ng-show="uploader.isHTML5">
+                                        <div class="progress" style="margin-bottom: 0;">
+                                            <div class="progress-bar" role="progressbar"
+                                                 ng-style="{ 'width': item.progress + '%' }"></div>
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        <span ng-show="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                                        <span ng-show="item.isCancel"><i
+                                                class="glyphicon glyphicon-ban-circle"></i></span>
+                                        <span ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                                    </td>
+                                    <td nowrap>
+                                        <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()"
+                                                ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                                            <span class="glyphicon glyphicon-upload"></span> 上传文件
+                                        </button>
+                                        <button type="button" class="btn btn-warning btn-xs" ng-click="item.cancel()"
+                                                ng-disabled="!item.isUploading">
+                                            <span class="glyphicon glyphicon-ban-circle"></span> 取消上传
+                                        </button>
+                                        <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
+                                            <span class="glyphicon glyphicon-trash"></span> 删除文件
+                                        </button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                            <div style="display: none;">
+                                <div>
+                                    总进度:
+                                    <div class="progress" style="">
+                                        <div class="progress-bar" role="progressbar"
+                                             ng-style="{ 'width': uploader.progress + '%' }"></div>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-success btn-s" ng-click="uploader.uploadAll()"
+                                        ng-disabled="!jobName || jobName == 1 && uploader.queue.length<=0">
+                                    <span class="glyphicon glyphicon-upload"></span> 全部上传
+                                </button>
+                                <button type="button" class="btn btn-warning btn-s" ng-click="uploader.cancelAll()"
+                                        ng-disabled="!uploader.isUploading">
+                                    <span class="glyphicon glyphicon-ban-circle"></span> 全部取消
+                                </button>
+                                <button type="button" class="btn btn-danger btn-s" ng-click="uploader.clearQueue()"
+                                        ng-disabled="!uploader.queue.length">
+                                    <span class="glyphicon glyphicon-trash"></span> 全部删除
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="margin-top: 20px;">
+                        <table class="table table-hover">
+                            <tr>
+                                <th>ID</th><th>作业</th><th>时间</th><th>操作</th>
+                            </tr>
+                            <tr>
+                                <td>1</td><td>TEST1</td><td>2016-05-26 10:00</td><td><button>查看详情 </button></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

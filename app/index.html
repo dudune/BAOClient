@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html lang="zh-CN" ng-app="baoApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="zh-CN" ng-app="baoApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="zh-CN" ng-app="baoApp" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="zh-CN" ng-app="baoApp" class="no-js"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>BAO 灾备演练系统</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/normalize.css">
+  <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/main.css">
+  <link rel="stylesheet" href="components/bootstrap/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="../node_modules/angular-ui-bootstrap/dist/ui-bootstrap-csp.css">
+  <link rel="stylesheet" href="../node_modules/angular-ui-switch/angular-ui-switch.min.css">
+
+  <link rel="stylesheet" href="../node_modules/angular-bootstrap-datetimepicker/src/css/datetimepicker.css">
+  <link rel="stylesheet" href="app.css">
+  <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
+</head>
+<body>
+  <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+  <![endif]-->
+
+  <div ng-view></div>
+
+  <!-- In production use:
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
+  -->
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-route/angular-route.js"></script>
+  <script src="bower_components/lodash/dist/lodash.min.js"></script>
+  <script src="../node_modules/restangular/dist/restangular.js"></script>
+  <script src="../node_modules/angular-file-upload/dist/angular-file-upload.min.js"></script>
+  <script src="../node_modules/angular-ui-bootstrap/dist/ui-bootstrap.js"></script>
+  <script src="../node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js"></script>
+  <script src="../node_modules/angular-ui-switch/angular-ui-switch.js"></script>
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-animate/angular-animate.js"></script>
+  <script src="bower_components/angular-strap/dist/angular-strap.min.js"></script>
+  <script src="bower_components/angular-strap/dist/angular-strap.tpl.min.js"></script>
+  <script src="../node_modules/checklist-model./checklist-model.js"></script>
+  <script src="../node_modules/moment/min/moment.min.js"></script>
+  <script src="../node_modules/angular-bootstrap-datetimepicker/src/js/datetimepicker.js"></script>
+  <script src="../node_modules/angular-bootstrap-datetimepicker/src/js/datetimepicker.templates.js"></script>
+
+  <script src="app.js"></script>
+  <script src="dr-drilling/drilling.js"></script>
+
+  <script src="date_window/dateWindowModel.js"></script>
+  <script src="date_window/dateWindowController.js"></script>
+
+  <script src="shop_cart/shoppingCatModel.js"></script>
+  <script src="shop_cart/CartController.js"></script>
+
+  <script src="myTest/myTestModel.js"></script>
+  <script src="myTest/myTestController.js"></script>
+
+  <script src="DateControl/dateModel.js"></script>
+  <script src="DateControl/dateController.js"></script>
+
+  <script src="WorkInstance/WorkInstanceModel.js"></script>
+  <script src="WorkInstance/WorkInstanceControl.js"></script>
+
+</body>
+</html>
